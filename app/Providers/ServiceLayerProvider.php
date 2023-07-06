@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+
+use App\Services\AuthenticationService;
+use App\Services\Interfaces\AuthenticationServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceLayerProvider extends ServiceProvider
@@ -13,7 +16,7 @@ class ServiceLayerProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->bind(AuthenticationServiceInterface::class,AuthenticationService::class);
     }
 
     /**
