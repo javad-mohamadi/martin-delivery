@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(OauthClientSeeder::class);
+        $this->call(RoleSeeder::class);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $shopCompany = User::factory()->create(['email' => 'shop.company@test.com']);
+        $foodCompany = User::factory()->create(['email' => 'food.company@test.com']);
+        $pedram      = User::factory()->create(['email' => 'pedram.courier@test.com']);
+        $peyman      = User::factory()->create(['email' => 'peyman.courier@test.com']);
+
+        $shopCompany->assignRole('company');
+        $foodCompany->assignRole('company');
+        $pedram->assignRole('courier');
+        $peyman->assignRole('courier');
     }
 }
