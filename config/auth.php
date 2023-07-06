@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard'     => 'web',
         'passwords' => 'users',
     ],
 
@@ -37,7 +37,12 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
+            'driver'   => 'session',
+            'provider' => 'users',
+        ],
+
+        'api' => [
+            'driver'   => 'passport',
             'provider' => 'users',
         ],
     ],
@@ -62,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model'  => App\Models\User::class,
         ],
 
         // 'users' => [
@@ -93,8 +98,8 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'table'    => 'password_reset_tokens',
+            'expire'   => 60,
             'throttle' => 60,
         ],
     ],
@@ -111,5 +116,20 @@ return [
     */
 
     'password_timeout' => 10800,
+
+    'clients' => [
+        'web'    => [
+            'admin' => [
+                'id'     => env('CLIENT_WEB_ADMIN_ID'),
+                'secret' => env('CLIENT_WEB_ADMIN_SECRET'),
+            ],
+        ],
+        'mobile' => [
+            'admin' => [
+                'id'     => env('CLIENT_MOBILE_ADMIN_ID'),
+                'secret' => env('CLIENT_MOBILE_ADMIN_SECRET'),
+            ],
+        ],
+    ],
 
 ];
