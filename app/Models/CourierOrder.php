@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Order extends Model
+class CourierOrder extends Model
 {
     use HasFactory;
 
@@ -16,18 +16,10 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
+        'order_id',
         'status',
-        'provider_name',
-        'provider_mobile',
-        'provider_address',
-        'provider_latitude',
-        'provider_longitude',
-        'receiver_name',
-        'receiver_mobile',
-        'receiver_address',
-        'receiver_latitude',
-        'receiver_longitude',
     ];
+
 
     /**
      * @param DateTimeInterface $date
@@ -44,6 +36,14 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'order_id');
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Prettus Repository Config
+| Prettus BaseRepository Config
 |--------------------------------------------------------------------------
 |
 |
@@ -10,7 +10,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Repository Pagination Limit Default
+    | BaseRepository Pagination Limit Default
     |--------------------------------------------------------------------------
     |
     */
@@ -66,10 +66,10 @@ return [
 
         /*
          |--------------------------------------------------------------------------
-         | Cache Repository
+         | Cache BaseRepository
          |--------------------------------------------------------------------------
          |
-         | Instance of Illuminate\Contracts\Cache\Repository
+         | Instance of Illuminate\Contracts\Cache\BaseRepository
          |
          */
         'repository' => 'cache',
@@ -94,7 +94,7 @@ return [
 
             /*
               |--------------------------------------------------------------------------
-              | Actions in Repository
+              | Actions in BaseRepository
               |--------------------------------------------------------------------------
               |
               | create : Clear Cache on create Entry in repository

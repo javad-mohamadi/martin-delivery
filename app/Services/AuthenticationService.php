@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Exceptions\MartinDeliveryException;
+use App\Exceptions\LogicException;
 use App\Services\Interfaces\AuthenticationServiceInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response as HttpResponse;
@@ -20,7 +20,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * @param $request
      * @return PromiseInterface|HttpResponse
-     * @throws MartinDeliveryException
+     * @throws LogicException
      */
     public function login($request): PromiseInterface|HttpResponse
     {
@@ -41,7 +41,9 @@ class AuthenticationService implements AuthenticationServiceInterface
     }
 
     /**
-     * @throws MartinDeliveryException
+     * @param $data
+     * @return PromiseInterface|HttpResponse
+     * @throws LogicException
      */
     public function callOAuth($data): PromiseInterface|HttpResponse
     {
@@ -50,7 +52,7 @@ class AuthenticationService implements AuthenticationServiceInterface
 
             return Http::asForm()->post($authFullApiUrl, $data);
         } catch (\Exception $exception){
-            throw new MartinDeliveryException(Response::HTTP_NOT_FOUND, $exception->getMessage());
+            throw new LogicException(Response::HTTP_NOT_FOUND, $exception->getMessage());
         }
 
     }

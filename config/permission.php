@@ -158,4 +158,8 @@ return [
 
         'store' => 'default',
     ],
+
+    'requests' => [
+        'allow-roles-to-access-all-routes' => env('ROLE_ACCESS_ALL_ROUTE', []),
+    ]
 ];

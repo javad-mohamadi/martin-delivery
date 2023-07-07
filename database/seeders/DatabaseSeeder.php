@@ -15,11 +15,15 @@ class DatabaseSeeder extends Seeder
         $this->call(OauthClientSeeder::class);
         $this->call(RoleSeeder::class);
 
+        $superAdmin  = User::factory()->create(['email' => 'superadmin@test.com']);
+        $admin       = User::factory()->create(['email' => 'admin@test.com']);
         $shopCompany = User::factory()->create(['email' => 'shop.company@test.com']);
         $foodCompany = User::factory()->create(['email' => 'food.company@test.com']);
         $pedram      = User::factory()->create(['email' => 'pedram.courier@test.com']);
         $peyman      = User::factory()->create(['email' => 'peyman.courier@test.com']);
 
+        $superAdmin->assignRole('super_admin');
+        $admin->assignRole('admin');
         $shopCompany->assignRole('company');
         $foodCompany->assignRole('company');
         $pedram->assignRole('courier');
