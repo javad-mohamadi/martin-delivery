@@ -18,8 +18,9 @@ return new class extends Migration {
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('status');
             $table->timestamp('accepted_at');
-            $table->timestamp('received_at');
-            $table->timestamp('delivered_at');
+            $table->timestamp('received_at')->nullable();
+            $table->timestamp('delivered_at')->nullable();
+            $table->timestamp('emergency_canceled_at')->nullable();
 
             $table->timestamps();
         });

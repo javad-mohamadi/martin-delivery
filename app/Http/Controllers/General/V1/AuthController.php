@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General\V1;
 
+use App\DTOs\Auth\LoginDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Services\Interfaces\AuthenticationServiceInterface;
@@ -21,7 +22,8 @@ class AuthController extends Controller
      */
     public function loginUsingPasswordGrant(LoginRequest $request): mixed
     {
-        $result = $this->service->login($request);
+        $dto    = LoginDTO::getFromRequest($request);
+        $result = $this->service->login($dto);
 
         return $result->json();
     }

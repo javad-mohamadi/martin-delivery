@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\DTOs\Company\GetCompanyOrdersDTO;
-use App\DTOs\Company\ShowCompanyOrdersDTO;
-use App\DTOs\Company\UpdateCompanyOrdersDTO;
-use App\Http\Resources\CompanyOrderResource;
-use App\DTOs\Company\CreateCompanyOrdersDTO;
+use App\DTOs\Company\ShowCompanyOrderDTO;
+use App\DTOs\Company\UpdateCompanyOrderDTO;
+use App\DTOs\Company\CreateCompanyOrderDTO;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Company\GetCompanyOrdersRequest;
 use App\Http\Requests\Company\ShowCompanyOrderRequest;
+use App\Http\Resources\Company\ShowCompanyOrderResource;
+use App\Http\Resources\Company\GetCompanyOrdersResource;
 use App\Http\Requests\Company\CreateCompanyOrderRequest;
 use App\Http\Requests\Company\UpdateCompanyOrderRequest;
 use App\Services\Interfaces\CompanyOrderServiceInterface;
+use App\Http\Resources\Company\CreateCompanyOrderResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CompanyOrderController extends Controller
@@ -35,31 +37,31 @@ class CompanyOrderController extends Controller
         $dto    = GetCompanyOrdersDTO::getFromRequest($request);
         $orders = $this->companyOrderService->index($dto);
 
-        return CompanyOrderResource::collection($orders);
+        return GetCompanyOrdersResource::collection($orders);
     }
 
     /**
      * @param ShowCompanyOrderRequest $request
-     * @return CompanyOrderResource
+     * @return ShowCompanyOrderResource
      */
-    public function show(ShowCompanyOrderRequest $request): CompanyOrderResource
+    public function show(ShowCompanyOrderRequest $request): ShowCompanyOrderResource
     {
-        $dto   = ShowCompanyOrdersDTO::getFromRequest($request);
+        $dto   = ShowCompanyOrderDTO::getFromRequest($request);
         $order = $this->companyOrderService->show($dto);
 
-        return new CompanyOrderResource($order);
+        return new ShowCompanyOrderResource($order);
     }
 
     /**
      * @param CreateCompanyOrderRequest $request
-     * @return CompanyOrderResource
+     * @return CreateCompanyOrderResource
      */
-    public function create(CreateCompanyOrderRequest $request): CompanyOrderResource
+    public function create(CreateCompanyOrderRequest $request): CreateCompanyOrderResource
     {
-        $dto   = CreateCompanyOrdersDTO::getFromRequest($request);
+        $dto   = CreateCompanyOrderDTO::getFromRequest($request);
         $order = $this->companyOrderService->create($dto);
 
-        return new CompanyOrderResource($order);
+        return new CreateCompanyOrderResource($order);
     }
 
     /**
@@ -68,12 +70,13 @@ class CompanyOrderController extends Controller
      */
     public function update(UpdateCompanyOrderRequest $request): JsonResponse
     {
-        $dto = UpdateCompanyOrdersDTO::getFromRequest($request);
+        $dto = UpdateCompanyOrderDTO::getFromRequest($request);
         $this->companyOrderService->update($dto);
 
-        return response()->json([
-                                    'message' => "your request was successful",
-                                ], Response::HTTP_OK);
+        return response()->json(
+            [
+                'message' => "your request was successful",
+            ], Response::HTTP_OK);
     }
 
 }

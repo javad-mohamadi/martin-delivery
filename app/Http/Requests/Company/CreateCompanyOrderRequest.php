@@ -14,6 +14,7 @@ class CreateCompanyOrderRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'company_id'         => 'required',
             'provider_name'      => 'required|string',
             'provider_mobile'    => 'required|regex:/(09)[0-9]{9}/|digits:11',
             'provider_address'   => 'required|string',

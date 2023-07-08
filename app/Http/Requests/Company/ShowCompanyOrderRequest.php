@@ -15,7 +15,8 @@ class ShowCompanyOrderRequest extends BaseRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:orders,id'
+            'id'         => 'required|exists:orders,id',
+            'company_id' => 'required',
         ];
     }
 

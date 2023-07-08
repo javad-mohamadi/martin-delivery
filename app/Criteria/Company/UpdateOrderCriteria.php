@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Criteria;
+namespace App\Criteria\Company;
 
 use App\Enum\OrderEnum;
 use Prettus\Repository\Contracts\CriteriaInterface;
@@ -8,20 +8,21 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 
 class UpdateOrderCriteria implements CriteriaInterface
 {
-    private int $orderId;
-
-    private int $userId;
-
-    public function __construct(int $orderId, int $userId)
+    /**
+     * @param int $orderId
+     */
+    public function __construct(private int $orderId)
     {
-        $this->orderId = $orderId;
-        $this->userId  = $userId;
     }
 
+    /**
+     * @param $model
+     * @param RepositoryInterface $repository
+     * @return mixed
+     */
     public function apply($model, RepositoryInterface $repository): mixed
     {
         return $model->where('id', '=', $this->orderId)
-            ->where('user_id', $this->userId)
-            ->where('status', OrderEnum::STATUS_PENDING);
+            ->where('status', OrderEnum::STATUS_WAITING);
     }
 }

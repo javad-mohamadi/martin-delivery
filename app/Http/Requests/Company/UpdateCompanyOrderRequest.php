@@ -15,8 +15,10 @@ class UpdateCompanyOrderRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'id'     => 'required|exists:orders,id',
-            'status' => 'in:canceled',
+            'id'         => 'required|exists:orders,id',
+            'status'     => 'in:canceled',
+            'company_id' => 'required',
+
         ];
     }
 

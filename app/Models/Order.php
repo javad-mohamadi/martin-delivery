@@ -15,7 +15,7 @@ class Order extends Model
      * @var string[]
      */
     protected $fillable = [
-        'user_id',
+        'company_id',
         'status',
         'provider_name',
         'provider_mobile',
@@ -41,9 +41,9 @@ class Order extends Model
     /**
      * @return BelongsTo
      */
-    public function user(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
 }

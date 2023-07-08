@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\Auth\LoginDTO;
 use App\Exceptions\LogicException;
 use App\Services\Interfaces\AuthenticationServiceInterface;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -18,19 +19,19 @@ class AuthenticationService implements AuthenticationServiceInterface
     const AUTH_ROUTE = '/oauth/token';
 
     /**
-     * @param $request
+     * @param LoginDTO $dto
      * @return PromiseInterface|HttpResponse
      * @throws LogicException
      */
-    public function login($request): PromiseInterface|HttpResponse
+    public function login(LoginDTO $dto): PromiseInterface|HttpResponse
     {
         $data = [
-            'username' => $request->email,
-            'password' => $request->password,
+            'username' => $dto->email,
+            'password' => $dto->password,
         ];
 
         $loginData = array_merge($data, [
-            'grant_type'    => $request->grant_type ?? 'password',
+            'grant_type'    => $dto->grant_type ?? 'password',
             'client_id'     => Config::get('auth.clients.web.admin.id'),
             'client_secret' => Config::get('auth.clients.web.admin.secret'),
             'scope'         => '',

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Company;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CompanyOrderResource extends JsonResource
+class CreateCompanyOrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,6 +16,7 @@ class CompanyOrderResource extends JsonResource
     {
         return [
             'id'                 => $this->id,
+            'company_id'         => $this->company_id,
             'provider_name'      => $this->provider_name,
             'provider_mobile'    => $this->provider_mobile,
             'provider_address'   => $this->provider_address,

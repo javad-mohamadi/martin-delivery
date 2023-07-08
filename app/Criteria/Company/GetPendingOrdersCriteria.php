@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Criteria;
+namespace App\Criteria\Company;
 
 use App\Enum\OrderEnum;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-class PendingOrdersCriteria implements CriteriaInterface
+class GetPendingOrdersCriteria implements CriteriaInterface
 {
     /**
      * @param $model
@@ -16,6 +16,6 @@ class PendingOrdersCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository): mixed
     {
-        return $model->where('status', '=', OrderEnum::STATUS_PENDING);
+        return $model->where('status', '=', OrderEnum::STATUS_WAITING);
     }
 }

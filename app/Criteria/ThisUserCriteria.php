@@ -2,25 +2,18 @@
 
 namespace App\Criteria;
 
-use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 class ThisUserCriteria implements CriteriaInterface
 {
     /**
-     * @var int
-     */
-    private int $userId;
-
-    /**
      * ThisUserCriteria constructor.
      *
-     * @param $userId
+     * @param int $userId
      */
-    public function __construct($userId = null)
+    public function __construct(private int $userId)
     {
-        $this->userId = $userId;
     }
 
     /**
@@ -31,10 +24,6 @@ class ThisUserCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository): mixed
     {
-        if (!$this->userId) {
-            $this->userId = Auth::user()->id;
-        }
-
         return $model->where('user_id', '=', $this->userId);
     }
 }

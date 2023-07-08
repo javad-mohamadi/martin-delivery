@@ -18,6 +18,9 @@ class CourierOrder extends Model
         'user_id',
         'order_id',
         'status',
+        'accepted_at',
+        'received_at',
+        'delivered_at',
     ];
 
 
@@ -43,7 +46,7 @@ class CourierOrder extends Model
      */
     public function order(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
 }

@@ -6,15 +6,26 @@ use Illuminate\Http\Request;
 
 class GetCompanyOrdersDTO
 {
-    public $companyId;
-
-    public function __construct(int $companyId)
+    /**
+     * @param array $companyIds
+     */
+    public function __construct(public array $companyIds)
     {
-        $this->companyId = $companyId;
     }
 
-    public static function getFromRequest(Request $request)
+    /**
+     * @param Request $request
+     * @return GetCompanyOrdersDTO
+     */
+    public static function getFromRequest(Request $request): GetCompanyOrdersDTO
     {
-        return new static($request->user()->id);
+        $companyIds = [];
+        if (!is_null($request->user()->companies)) {
+            $companyIds = array_map(function ($item) {
+                return $item['id'];
+            }, $request->user()->companies->toArray());
+        }
+
+        return new static($companyIds);
     }
 }
