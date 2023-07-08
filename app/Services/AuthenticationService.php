@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Exceptions\MartinDeliveryException;
+use App\DTOs\Auth\LoginDTO;
+use App\Exceptions\LogicException;
 use App\Services\Interfaces\AuthenticationServiceInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response as HttpResponse;
@@ -18,19 +19,19 @@ class AuthenticationService implements AuthenticationServiceInterface
     const AUTH_ROUTE = '/oauth/token';
 
     /**
-     * @param $request
+     * @param LoginDTO $dto
      * @return PromiseInterface|HttpResponse
-     * @throws MartinDeliveryException
+     * @throws LogicException
      */
-    public function login($request): PromiseInterface|HttpResponse
+    public function login(LoginDTO $dto): PromiseInterface|HttpResponse
     {
         $data = [
-            'username' => $request->email,
-            'password' => $request->password,
+            'username' => $dto->email,
+            'password' => $dto->password,
         ];
 
         $loginData = array_merge($data, [
-            'grant_type'    => $request->grant_type ?? 'password',
+            'grant_type'    => $dto->grant_type ?? 'password',
             'client_id'     => Config::get('auth.clients.web.admin.id'),
             'client_secret' => Config::get('auth.clients.web.admin.secret'),
             'scope'         => '',
@@ -41,7 +42,9 @@ class AuthenticationService implements AuthenticationServiceInterface
     }
 
     /**
-     * @throws MartinDeliveryException
+     * @param $data
+     * @return PromiseInterface|HttpResponse
+     * @throws LogicException
      */
     public function callOAuth($data): PromiseInterface|HttpResponse
     {
@@ -50,7 +53,7 @@ class AuthenticationService implements AuthenticationServiceInterface
 
             return Http::asForm()->post($authFullApiUrl, $data);
         } catch (\Exception $exception){
-            throw new MartinDeliveryException(Response::HTTP_NOT_FOUND, $exception->getMessage());
+            throw new LogicException(Response::HTTP_NOT_FOUND, $exception->getMessage());
         }
 
     }

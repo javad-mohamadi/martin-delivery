@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')
+            $table->foreignId('company_id')->nullable()->constrained('companies')
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('provider_name');
             $table->string('provider_mobile');

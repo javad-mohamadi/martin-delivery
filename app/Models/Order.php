@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\DateTime;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +15,7 @@ class Order extends Model
      * @var string[]
      */
     protected $fillable = [
-        'user_id',
+        'company_id',
         'status',
         'provider_name',
         'provider_mobile',
@@ -29,22 +29,21 @@ class Order extends Model
         'receiver_longitude',
     ];
 
-
     /**
-     * @var string[]
+     * @param DateTimeInterface $date
+     * @return string
      */
-    protected $casts = [
-        'created_at' => DateTime::class,
-        'updated_at' => DateTime::class,
-    ];
-
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * @return BelongsTo
      */
-    public function user(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
 }
