@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Enum\OrderEnum;
 use App\Enum\CourierOrderEnum;
+use App\Events\OrderWebHookEvent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\LogicException;
@@ -33,7 +34,6 @@ class CourierOrderService implements CourierOrderServiceInterface
      * @param UpdateStatusToReceived $updateStatusToReceived
      * @param UpdateStatusToDelivered $updateStatusToDelivered
      * @param UpdateStatusToCanceled $updateStatusToCanceled
-     * @param WebHookService $webHookService
      */
     public function __construct(
         protected CourierOrderRepositoryInterface $courierOrderRepository,
@@ -41,7 +41,6 @@ class CourierOrderService implements CourierOrderServiceInterface
         protected UpdateStatusToReceived          $updateStatusToReceived,
         protected UpdateStatusToDelivered         $updateStatusToDelivered,
         protected UpdateStatusToCanceled          $updateStatusToCanceled,
-        protected WebHookService                  $webHookService,
     )
     {
     }
@@ -116,8 +115,8 @@ class CourierOrderService implements CourierOrderServiceInterface
 
             DB::commit();
 
-            $webhookUrl = $order->company->webhook_url;
-            $this->webHookService->notify($webhookUrl, $dto->orderId);
+            $webHookUrl = $order->company->webhook_url;
+            event(new OrderWebHookEvent($webHookUrl, $dto->orderId));
         } catch (Exception) {
             DB::rollBack();
             throw new LogicException(Response::HTTP_NOT_FOUND);
@@ -141,8 +140,8 @@ class CourierOrderService implements CourierOrderServiceInterface
 
             DB::commit();
 
-            $webhookUrl = $order->company->webhook_url;
-            $this->webHookService->notify($webhookUrl, $courierOrder->order_id);
+            $webHookUrl = $order->company->webhook_url;
+            event(new OrderWebHookEvent($webHookUrl, $courierOrder->order_id));
         } catch (Exception $e) {
             DB::rollBack();
             throw new LogicException(Response::HTTP_BAD_REQUEST);
