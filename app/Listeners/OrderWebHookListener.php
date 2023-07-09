@@ -4,8 +4,9 @@ namespace App\Listeners;
 
 use App\Events\OrderWebHookEvent;
 use App\Services\WebHookService;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class OrderWebHookListener
+class OrderWebHookListener implements ShouldQueue
 {
     /**
      *
