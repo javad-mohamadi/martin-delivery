@@ -1,6 +1,6 @@
 =============================== Martin Delivery ===============================
 
-    php version 8.0, mysql version 8.0.33
+    php version 8.2, mysql version 8.0.33
 
 
 - you can run the project by following the steps below:
