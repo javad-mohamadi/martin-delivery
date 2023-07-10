@@ -31,7 +31,7 @@
 
 =============================== Martin Delivery ===============================
 
-- Complex APIs (prefix: /api/v1)
+- Company APIs (prefix: /api/v1)
 
 - login:
     - POST /login
