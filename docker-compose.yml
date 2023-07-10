@@ -7,21 +7,21 @@ services:
             context: .
             dockerfile: Dockerfile
         image: martin/php
-        container_name: martin.app
+        container_name: martin-app
         restart: unless-stopped
         tty: true
         working_dir: /var/www
         volumes:
             - ./:/var/www
-            - ./storage:/var/www/storage
+            - ./docker/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - martin-network
 
     #Nginx Service
     webserver:
         image: nginx:alpine
-        container_name: martin.webserver
-        restart: unless-stopped
+        container_name: martin.nginx
+        restart: always
         tty: true
         ports:
             - "8087:80"
@@ -34,16 +34,16 @@ services:
     #MySQL Service
     db:
         image: mysql:8.0.33
-        container_name: martin.db
+        container_name: martin-db
         restart: unless-stopped
         tty: true
         ports:
             - "3308:3306"
         environment:
-            MYSQL_DATABASE: laravel
-            MYSQL_ROOT_PASSWORD: your_root_password
-            SERVICE_TAGS: dev
-            SERVICE_NAME: mysql
+              MYSQL_DATABASE: "martin"
+              MYSQL_ROOT_PASSWORD: "root"
+              MYSQL_USER: "martin"
+              MYSQL_PASSWORD: "secret"
         volumes:
             - dbdata:/var/lib/mysql/
             - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
@@ -57,6 +57,20 @@ services:
             - redisdata:/data
         ports:
             - "6377:6379"
+        networks:
+            - martin-network
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: martin-phpmyadmin
+        environment:
+          PMA_HOST: db
+          MYSQL_USER: "martin"
+          MYSQL_PASSWORD: "secret"
+        ports:
+          - "8987:80"
+        networks:
+                    - martin-network
 
 #Docker Networks
 networks:
@@ -66,6 +80,8 @@ networks:
 #Volumes
 volumes:
     dbdata:
-        driver: local
+        driver: "local"
     redisdata:
-        driver: local
+        driver: "local"
+    phpmyadmindata:
+        driver: "local"
