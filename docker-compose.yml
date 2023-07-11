@@ -20,7 +20,7 @@ services:
     #Nginx Service
     webserver:
         image: nginx:alpine
-        container_name: martin.nginx
+        container_name: martin-nginx
         restart: always
         tty: true
         ports:
@@ -52,7 +52,7 @@ services:
 
     redis:
         image: redis:latest
-        container_name: martin.redis
+        container_name: martin-redis
         volumes:
             - redisdata:/data
         ports:
