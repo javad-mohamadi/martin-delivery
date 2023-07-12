@@ -1,6 +1,7 @@
 version: '3.7'
 services:
 
+    #PHP Service
     app:
         build:
           context: .
@@ -67,7 +68,7 @@ services:
           - redisdata:/data
         networks:
           - martin-network
-
+    
 #Docker Networks
 networks:
     martin-network:
