@@ -1,7 +1,18 @@
 =============================== Martin Delivery ===============================
 
-    php version 8.2, mysql version 8.0.33
+    php version 8.2, mysql version 8.0.32, composer version 2.4
 
+- run this project with docker-compose
+      1. clone project from git
+      2. copy .env.example to .env
+      3. run "docker-compose up -d --build"
+      4. run "docker exec -it martin-app sh"
+      5. run "composer install"
+      6. run "php artisan migrate"
+      7. run "php artisan db:seed"
+      8. run "php artisan passport:install"
+      9. set CLIENT_WEB_ADMIN_ID and CLIENT_WEB_ADMIN_SECRET from oauth_client table
+      10.done
 
 - you can run the project by following the steps below:
 
