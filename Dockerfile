@@ -40,4 +40,7 @@ RUN chmod -R 664 /var/www/composer.json
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+
+RUN chmod 755 ./docker/entrypoint*
+
+ENTRYPOINT ["./docker/entrypoint-app.sh"]
