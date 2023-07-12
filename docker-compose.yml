@@ -11,8 +11,8 @@ services:
         restart: unless-stopped
         tty: true
         depends_on:
-            - db
-            - redis
+          - db
+          - redis
         entrypoint: ./docker/entrypoint-app.sh
         volumes:
           - ./:/var/www

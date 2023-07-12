@@ -3,15 +3,8 @@
     php version 8.2, mysql version 8.0.32, composer version 2.4
 
 - run this project with docker
-- *** Note that all these steps can be handled automatically with Docker, which will be added to the project soon***
      - clone project from git
-     - copy .env.example to .env 
-     - run "docker-compose up -d --build" 
-     - run "docker exec -it martin-app sh" 
-     - run "composer install" 
-     - run "php artisan migrate" 
-     - run "php artisan db:seed" 
-     - run "php artisan passport:install" 
+     - run "make app_build"
      - set CLIENT_WEB_ADMIN_ID and CLIENT_WEB_ADMIN_SECRET from oauth_client table 
      - done
 
