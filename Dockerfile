@@ -34,8 +34,6 @@ USER martin
 
 COPY --chown=martin:martin . .
 
-COPY .env.example .env
-
 RUN chmod -R ug+rwx storage bootstrap/cache
 
 RUN chmod -R 664 /var/www/composer.json
