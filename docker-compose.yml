@@ -10,9 +10,13 @@ services:
         container_name: martin-app
         restart: unless-stopped
         tty: true
+        depends_on:
+          - db
+          - redis
+        entrypoint: ./docker/entrypoint-app.sh
         volumes:
           - ./:/var/www
-          - ./docker/local.ini:/usr/local/etc/php/conf.d/local.ini
+          - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
           - martin-network
 
@@ -32,7 +36,7 @@ services:
     db:
         image: mysql:8.0.32
         container_name: martin-db
-        restart: unless-stopped
+        restart: always
         tty: true
         environment:
           MYSQL_DATABASE: "martin"
@@ -42,7 +46,7 @@ services:
         ports:
           - "3309:3306"
         volumes:
-          - dbdata:/var/lib/mysql/
+          - martindbdata:/var/lib/mysql/
           - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
         networks:
           - martin-network
@@ -65,10 +69,10 @@ services:
         ports:
           - "6377:6379"
         volumes:
-          - redisdata:/data
+          - martinredisdata:/data
         networks:
           - martin-network
-    
+
 #Docker Networks
 networks:
     martin-network:
@@ -76,9 +80,9 @@ networks:
 
 #Volumes
 volumes:
-    dbdata:
+    martindbdata:
         driver: "local"
-    redisdata:
+    martinredisdata:
         driver: "local"
     phpmyadmindata:
         driver: "local"
