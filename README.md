@@ -5,7 +5,7 @@
 - run this project with docker
      - clone project from git
      - run "make app_build"
-     - set CLIENT_WEB_ADMIN_ID and CLIENT_WEB_ADMIN_SECRET from oauth_client table 
+     - Set env variable: Set CLIENT_WEB_ADMIN_ID and CLIENT_WEB_ADMIN_SECRET  from oauth_client table 
      - done
 
 - you can run the project by following the steps below:
