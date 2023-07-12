@@ -4,6 +4,8 @@
 
 - run this project with docker
 *** Note that all these steps can be handled automatically with Docker, which will be added to the project soon ***
+      1. clone project from git
+      2. copy .env.example to .env
       3. run "docker-compose up -d --build"
       4. run "docker exec -it martin-app sh"
       5. run "composer install"
