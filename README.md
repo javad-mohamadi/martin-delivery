@@ -2,7 +2,8 @@
 
     php version 8.2, mysql version 8.0.32, composer version 2.4
 
-- run this project with docker-compose
+- run this project with docker
+*** Note that all these steps can be handled automatically with Docker, which will be added to the project soon ***
       1. clone project from git
       2. copy .env.example to .env
       3. run "docker-compose up -d --build"
